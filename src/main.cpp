@@ -4,7 +4,14 @@
 
 int main(){
     std::cout << "entry point\n";
-    PNGToJPEG();
-    CustomFormat();
+    std::string input{"test/test.jpg"};
+    std::string outputType{"png"};
+    std::string dest{"test/test." + outputType};
+
+    int quality {100};
+    if(IMGConverter(input,dest,outputType,quality)){
+        std::cout << "Image converted successfully\n";
+    }
+    //CustomFormat();
     std::cin.get();
 }
