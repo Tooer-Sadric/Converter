@@ -2,5 +2,9 @@
 
 
 void PNGToJPEG(){
+
+}
+
+void CustomFormat(){
     
 }

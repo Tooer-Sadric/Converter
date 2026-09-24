@@ -8,5 +8,7 @@
 
 void PNGToJPEG();
 
+void CustomFormat();
+
 
 #endif
