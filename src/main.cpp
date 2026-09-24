@@ -3,6 +3,7 @@
 
 
 int main(){
+    std::cout << "entry point\n";
     PNGToJPEG();
     CustomFormat();
     std::cin.get();
