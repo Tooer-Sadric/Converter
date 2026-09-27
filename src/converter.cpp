@@ -25,7 +25,7 @@ bool IMGConverter(std::string const& inPath, std::string const& dest,std::string
     type = ToLower(type);
     
     int ok{0};
-
+    //type checking
     if(type == exten){
         std::cerr << "Attempting to convert to the same file format\n";
     }
@@ -49,7 +49,7 @@ bool IMGConverter(std::string const& inPath, std::string const& dest,std::string
         std::cout << "jpg or jpeg selected\n";
         //ok = 1;
         ok = stbi_write_jpg(dest.c_str(),width,height,channel,img,qual);
-    }
+    } //if other file types needed to be added here.
     else{
         std::cerr << "Unsupported format ." << type << '\n';
         ok = 1;
