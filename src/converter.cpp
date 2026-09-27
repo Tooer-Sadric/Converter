@@ -7,9 +7,9 @@
 #include "stb_image.h"
 #include <algorithm>
 #include <vector>
+#include <cctype>
 
 //FORWARD DECALS
-std::string ToLower(std::string& inStr);
 
 bool IMGConverter(std::string const& inPath, std::string const& dest,std::string& type ,unsigned int const& qual,
                   bool const& canResize)
@@ -47,7 +47,8 @@ bool IMGConverter(std::string const& inPath, std::string const& dest,std::string
     }
     else if(type == "jpeg" || type == "jpg"){
         std::cout << "jpg or jpeg selected\n";
-        ok = 1;
+        //ok = 1;
+        ok = stbi_write_jpg(dest.c_str(),width,height,channel,img,qual);
     }
     else{
         std::cerr << "Unsupported format ." << type << '\n';
@@ -71,7 +72,7 @@ std::string GetExtension(std::string const& item){
     std::string extension{item.substr(dotPos+1)};
     //lowercase the extension
     std::transform(extension.begin(),extension.end(),extension.begin(),[](unsigned char c){
-        return std::towlower(c);
+        return std::tolower(c);
     });
 
     return extension;
@@ -79,7 +80,7 @@ std::string GetExtension(std::string const& item){
 
 std::string ToLower(std::string& inStr){
     std::transform(inStr.begin(),inStr.end(),inStr.begin(),[](unsigned char c){
-        return std::towlower(c);
+        return std::tolower(c);
     });
     return inStr;
 }

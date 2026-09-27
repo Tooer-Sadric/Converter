@@ -21,5 +21,5 @@ void CustomFormat();
 
 //Helper funcs
 std::string GetExtension(std::string const&);
-
+std::string ToLower(std::string& inStr);
 #endif
