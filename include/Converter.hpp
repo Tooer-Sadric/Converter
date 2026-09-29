@@ -14,7 +14,7 @@
  * @param qual   the quality of image to retains
  * @param canResize give the ability to resize image and essentially downscale
  */
-bool IMGConverter(std::string const& inPath, std::string const& dest,std::string& type ,unsigned int const& qual, bool const& canResize);
+bool IMGConverter(std::string const& inPath, std::string const& dest,std::string& type ,unsigned int const& qual, bool const& canResize,int rzVal);
 
 void CustomFormat();
 
