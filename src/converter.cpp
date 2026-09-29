@@ -10,9 +10,11 @@
 #include <cctype>
 
 //FORWARD DECALS
+int Resize(unsigned char* data, int width, int height, int channel, int rzValue, std::string const& dest);
+
 
 bool IMGConverter(std::string const& inPath, std::string const& dest,std::string& type ,unsigned int const& qual,
-                  bool const& canResize)
+                  bool const& canResize, int rzVal)
 {
     int width, height, channel;
     //gna assume sbti store the values of the width and all after checking the file.
@@ -32,13 +34,7 @@ bool IMGConverter(std::string const& inPath, std::string const& dest,std::string
     else if(type == "png"){
         std::cout << "png selected\n";
         if(canResize){
-            unsigned int newWidth = width / 2;
-            unsigned int newHeight = height / 2;
-
-            std::vector<unsigned char> resized(newWidth * newHeight * channel);
-
-            stbir_resize_uint8_linear(img, width, height, 0, resized.data(), newWidth, newHeight, 0,(stbir_pixel_layout)channel);
-            ok = stbi_write_png(dest.c_str(),newWidth,newHeight,channel,resized.data(), newWidth * channel);
+            ok = Resize(img,width,height,channel,rzVal,dest);
             std::cout << "Image Resized\n";
         }else{
             //default conversion
@@ -61,6 +57,16 @@ bool IMGConverter(std::string const& inPath, std::string const& dest,std::string
 
 void CustomFormat(){
     std::cout << "Stub function for the case of custom format\n";
+}
+
+int Resize(unsigned char* data, int width, int height, int channel, int rzValue, std::string const& dest){
+    //assuming rzValue will be 75, 50, 25
+    //do some math regarding rzValue to be equal to be each requisite
+    unsigned int newWidth = static_cast<unsigned int>(width  * rzValue / 100);
+    unsigned int newHeight = static_cast<unsigned int>(height * rzValue / 100);
+    std::vector<unsigned char> resized(newWidth * newHeight * channel);
+    stbir_resize_uint8_linear(data, width, height, 0, resized.data(), newWidth, newHeight, 0,(stbir_pixel_layout)channel);
+    return stbi_write_png(dest.c_str(),newWidth,newHeight,channel,resized.data(), newWidth * channel);
 }
 
 //if for some reason we ever need ts
