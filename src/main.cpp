@@ -36,8 +36,17 @@ int main(){
     unsigned int quality {};
     std::cout << "Quality: ";
     std::cin >> quality;
+    int resizeAmt{};
+    if(rz == 1){
+        std::cout << "Resized by to what size? 75%, 50%, 25%: ";
+        std::cin >> resizeAmt;
+    }
+    if(resizeAmt <= 0){
+        std::cout <<"Nah, 0 or negs not allowed. defaulting to 100 <no resize>" << std::endl;
+        resizeAmt = 100;
+    }
 
-    if(IMGConverter(input,dest,outputType,quality,resize)){
+    if(IMGConverter(input,dest,outputType,quality,resize,resizeAmt)){
         std::cout << "Image converted successfully\n";
     }
     //CustomFormat();
