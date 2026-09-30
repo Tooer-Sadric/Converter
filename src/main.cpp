@@ -34,19 +34,30 @@ int main(){
     std::cin >> rz;
     if(rz == 1){resize = true;}else{resize = false;}
     unsigned int quality {};
-    std::cout << "Quality: ";
-    std::cin >> quality;
+    //for JPG only
     int resizeAmt{};
-    if(rz == 1){
-        std::cout << "Resized by to what size? 75%, 50%, 25%: ";
-        std::cin >> resizeAmt;
-    }
-    if(resizeAmt <= 0){
-        std::cout <<"Nah, 0 or negs not allowed. defaulting to 100 <no resize>" << std::endl;
-        resizeAmt = 100;
+    int channelCount{};
+    if(outputType == "jpg"){
+        std::cout << "Quality: ";
+        std::cin >> quality;
+    }else{ //PNG area
+        if(rz == 1){
+            std::cout << "Resized by to what size? 75%, 50%, 25%: ";
+            std::cin >> resizeAmt;
+            if(resizeAmt <= 0){
+                std::cout <<"Nah, 0 or negs not allowed. defaulting to 100 <no resize>" << std::endl;
+                resizeAmt = 100;
+            }
+        }
+        std::cout << "How many color channels would you like to keep? Max is 256: ";
+        std::cin >> channelCount;
+        if(channelCount < 1 || channelCount > 256){
+            std::cout << "Unsupported value, defaulting to 256" << std::endl;
+            channelCount = 256;
+        }
     }
 
-    if(IMGConverter(input,dest,outputType,quality,resize,resizeAmt)){
+    if(IMGConverter(input,dest,outputType,quality,resize,resizeAmt,channelCount)){
         std::cout << "Image converted successfully\n";
     }
     //CustomFormat();
