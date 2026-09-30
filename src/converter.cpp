@@ -10,11 +10,11 @@
 #include <cctype>
 
 //FORWARD DECALS
-int Resize(unsigned char* data, int width, int height, int channel, int rzValue, std::string const& dest);
-
+int Resize(unsigned char* data, int width, int height, int channel, int rzValue, std::string const& dest,int colorChannels);
+void Quantize_uniform(unsigned char *pixels, int w, int h, int channels, int levels);
 
 bool IMGConverter(std::string const& inPath, std::string const& dest,std::string& type ,unsigned int const& qual,
-                  bool const& canResize, int rzVal)
+                  bool const& canResize, int rzVal, int colorChannels)
 {
     int width, height, channel;
     //gna assume sbti store the values of the width and all after checking the file.
@@ -27,17 +27,19 @@ bool IMGConverter(std::string const& inPath, std::string const& dest,std::string
     type = ToLower(type);
     
     int ok{0};
-    //type checking
-    if(type == exten){
-        std::cerr << "Attempting to convert to the same file format\n";
-    }
-    else if(type == "png"){
+    //type checking i think this is redundant coz what if user wants to compress to the same type
+    // if(type == exten){
+    //     std::cerr << "Attempting to convert to the same file format\n";
+    // }
+    if(type == "png"){
         std::cout << "png selected\n";
+        
         if(canResize){
-            ok = Resize(img,width,height,channel,rzVal,dest);
+            ok = Resize(img,width,height,channel,rzVal,dest,colorChannels);
             std::cout << "Image Resized\n";
         }else{
             //default conversion
+            Quantize_uniform(img,width,height,channel,colorChannels);
             ok = stbi_write_png(dest.c_str(),width,height,channel,img, width * channel);
         }
     }
@@ -59,14 +61,30 @@ void CustomFormat(){
     std::cout << "Stub function for the case of custom format\n";
 }
 
-int Resize(unsigned char* data, int width, int height, int channel, int rzValue, std::string const& dest){
+int Resize(unsigned char* data, int width, int height, int channel, int rzValue, std::string const& dest, int colorChannels){
     //assuming rzValue will be 75, 50, 25
     //do some math regarding rzValue to be equal to be each requisite
     unsigned int newWidth = static_cast<unsigned int>(width  * rzValue / 100);
     unsigned int newHeight = static_cast<unsigned int>(height * rzValue / 100);
     std::vector<unsigned char> resized(newWidth * newHeight * channel);
     stbir_resize_uint8_linear(data, width, height, 0, resized.data(), newWidth, newHeight, 0,(stbir_pixel_layout)channel);
+    Quantize_uniform(resized.data(),newWidth,newHeight,channel,colorChannels);
     return stbi_write_png(dest.c_str(),newWidth,newHeight,channel,resized.data(), newWidth * channel);
+}
+
+/**
+ * @param pixels image data
+ * @param w width of image
+ * @param h height of image
+ * @param channels total channels within the image
+ * @param colorsPerChannel total amount of channel to keep, bigger val = nicer image, bigger size, vice versa.
+ */
+void Quantize_uniform(unsigned char *pixels, int w, int h, int channels, int colorsPerChannel){
+    int step = 256 / colorsPerChannel;
+    for(int i{}; i < w * h * channels; i++){
+        if (channels == 4 && (i % 4 == 3)) continue; //skip alpha channel
+        pixels[i] = (pixels[i] / step) * step + step / 2;
+    }
 }
 
 //if for some reason we ever need ts
