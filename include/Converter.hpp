@@ -16,6 +16,8 @@
  */
 bool IMGConverter(std::string const& inPath, std::string const& dest,std::string& type ,unsigned int const& qual, bool const& canResize,int rzVal,int colorChannels);
 
+void GausianImage();
+
 void CustomFormat();
 
 
