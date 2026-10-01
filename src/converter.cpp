@@ -87,7 +87,9 @@ void Quantize_uniform(unsigned char *pixels, int w, int h, int channels, int col
     }
 }
 
-//if for some reason we ever need ts
+/**
+ * @param item the item file location
+ */
 std::string GetExtension(std::string const& item){
     std::size_t dotPos{item.find_last_of('.')};
     //no dot position found.
