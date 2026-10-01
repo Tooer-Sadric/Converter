@@ -58,6 +58,10 @@ bool ImgData::IMGConverter(Image& newImage){
     return (ok != 0);
 }
 
+void ImgData::what() const{
+    
+}
+
 void CustomFormat(){
     std::cout << "Stub function for the case of custom format\n";
 }

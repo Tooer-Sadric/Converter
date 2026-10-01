@@ -22,6 +22,9 @@ struct ImgData{
      * @param newImage encapsulated image for processing
      */
     bool IMGConverter(Image& newImage);
+    /**
+     * @brief error logging purposes
+     */
     void what() const;
 };
 
