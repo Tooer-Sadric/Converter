@@ -7,6 +7,22 @@
 #define convert_hpp
 
 
+struct Image{
+    std::string inPath;
+    std::string outPath;
+    std::string type;
+    unsigned int quality;
+    bool canResize;
+    unsigned int resizeValue;
+    unsigned int colorChannels;
+};
+
+struct ImgData{
+    bool IMGConverter(Image& newImage);
+    void what() const;
+};
+
+
 /**
  * @param inPath the entry for images to be converted
  * @param dest   the destination for the image to go tos
