@@ -5,6 +5,9 @@
 
 int main(){
     std::cout << "entry point\n";
+    ImgData newImgData;
+    Image newImage;
+
     std::cout << "input file location: ";
     std::string input{};
     std::cin >> input;
@@ -57,7 +60,16 @@ int main(){
         }
     }
 
-    if(IMGConverter(input,dest,outputType,quality,resize,resizeAmt,channelCount)){
+    newImage.inPath = input;
+    newImage.outPath = dest;
+    newImage.quality = quality;
+    newImage.type = outputType;
+    newImage.canResize = resize;
+    newImage.resizeValue = resizeAmt;
+    newImage.colorChannels = channelCount;
+
+
+    if(newImgData.IMGConverter(newImage)){
         std::cout << "Image converted successfully\n";
     }
     //CustomFormat();
