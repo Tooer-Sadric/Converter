@@ -96,9 +96,6 @@ void Quantize_uniform(unsigned char *pixels, int w, int h, int channels, int col
     }
 }
 
-/**
- * @param item the item file location
- */
 std::string GetExtension(std::string const& item){
     std::size_t dotPos{item.find_last_of('.')};
     //no dot position found.
@@ -112,9 +109,7 @@ std::string GetExtension(std::string const& item){
 
     return extension;
 }
-/**
- * @param inStr string to lowercase
- */
+
 std::string ToLower(std::string& inStr){
     std::transform(inStr.begin(),inStr.end(),inStr.begin(),[](unsigned char c){
         return std::tolower(c);

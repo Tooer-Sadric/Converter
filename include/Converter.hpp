@@ -18,19 +18,16 @@ struct Image{
 };
 
 struct ImgData{
+    /**
+     * @param newImage encapsulated image for processing
+     */
     bool IMGConverter(Image& newImage);
     void what() const;
 };
 
 
-/**
- * @param inPath the entry for images to be converted
- * @param dest   the destination for the image to go tos
- * @param type   the type of img to convert to
- * @param qual   the quality of image to retains
- * @param canResize give the ability to resize image and essentially downscale
- */
-bool IMGConverter(std::string const& inPath, std::string const& dest,std::string& type ,unsigned int const& qual, bool const& canResize,int rzVal,int colorChannels);
+
+//bool IMGConverter(std::string const& inPath, std::string const& dest,std::string& type ,unsigned int const& qual, bool const& canResize,int rzVal,int colorChannels);
 
 void GausianImage();
 
@@ -38,6 +35,14 @@ void CustomFormat();
 
 
 //Helper funcs
+
+/**
+ * @param item the item file location
+ */
 std::string GetExtension(std::string const&);
+
+/**
+ * @param inStr string to lowercase
+ */
 std::string ToLower(std::string& inStr);
 #endif
